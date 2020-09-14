@@ -1,5 +1,18 @@
 1。用redis干了啥：
-    1。1：用redis做websocket集群调度器广播publish和订阅
+    1。1：用redis做websocket集群调度器广播publish和订阅，与分布式定时任务框elastic-job 混合使用
     1。2：做动态临界代码逻辑的开关，缓存
     1。3：做分布式锁，在大量的交易逻辑的写库操作，配和查操作的for update语句，实际上也是缓存
     1。4：用set结构做白名单
+    1。5：多级缓存的设计，单个和组合子应用的设计，活动预热设计。
+
+string type :
+    1. help @String（String 类型的的help）
+       面向字符串的内置方法很多，跟java一样.index length subString...
+    1.1 help set(set命令的help)
+        SET key value [expiration EX seconds|PX milliseconds] [NX|XX]
+        nx : if not exit set,else return nil;
+        xx : if exit update,else return nil;
+    1.2 正反向索引 ： subString（index1,index2）截取key的字符串。
+        eg : GETRANGE key index1 index2;
+
+key 的基本属性 type（type key） ：key对应的value的类型 string hset hmap。。

@@ -1,0 +1,6 @@
+1.小D websocket
+    end-point：基站
+    topic：订阅的主题
+    broken：中介
+
+    Spring 监听器
