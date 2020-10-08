@@ -15,4 +15,8 @@ string type :
     1.2 正反向索引 ： subString（index1,index2）截取key的字符串。
         eg : GETRANGE key index1 index2;
 
-key 的基本属性 type（type key） ：key对应的value的类型 string hset hmap。。
+key 的基本属性 type（type key） ：key对应的value的类型 string hset hmap list。。
+
+INCRBY key 自增
+DECRBBY key 自减
+INCRBYFLOAT key xx 自增浮点数

@@ -1,0 +1,31 @@
+
+    1。 面试：
+    2。 字符串常量 public static final String ASD= 'sda'；
+        1。7放在了常量池，永久代
+        1。8放在了堆。要看待jvm的版本发展
+
+    3。查看所有-xx hotspot参数 ， 过滤CMS的。
+    qiucy$ Java -XX:+PrintFlagsFinal -version | grep CMS
+
+    4。-Xms 和 -Xmx一般设置为一样大小，不要弹性，浪费os cpu压缩动作。
+
+    5。linux time xx命令:user=0.01(用户态) sys=0.01(内核态) real=0.01sec(总用时)
+
+    6。jvm 在内存溢出会dump下整个堆的日志。
+
+    7。used 1500k 已使用 ，
+        capacity 4000k 总容量 ，
+        committed 4500k 虚拟内存占用 ,
+        reserved虚拟内存保留.
+
+    8。吞吐量优先eg：科学计算 数据挖掘 thrput等。（一般gc选型：pa+po）
+        响应时间优先eg：网站 gui api rpc等 （一般gc选型：G1）
+
+    9。cpu突然飙高或经常100%怎么办？如何调优？
+          top 指令找出哪个进程占用cpu高，
+          然后找出该进程的哪个线程占cpu高（top -Hp PID），
+          若是java程序找出该线程的堆栈信息的哪个方法(jstack -l PID)。
+       系统内存飙高，如何查找问题？
+          java程序的话导出堆内存（jmap）
+          分析（jhat。。等很多分析工具）
+

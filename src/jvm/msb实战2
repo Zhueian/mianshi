@@ -1,0 +1,10 @@
+
+
+    10。jconsile jvisualvm 都是jdk自带的 图形化监控
+        这些工具要服务器的jvm jmx启动参数（java manager extend java管理扩展）打开
+        但是jmx本身要浪费cpu资源 面试别说用图形化调优定位问题，线上不能用，测试能用
+
+    11。jmap -histo PID | head -20 jvm前20多的实例。
+        但是jmap的命令很吃内存，大内存jvm用jmap很可能出现卡顿
+
+    12。设定启动参数HeapDump 。oom自动产生堆转储文件 / jamp也能dump ： jmap -dump:format=b,file=xxx pid/jmap -histo
