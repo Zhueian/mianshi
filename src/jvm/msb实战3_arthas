@@ -1,0 +1,51 @@
+
+
+        1.简介：
+            1.1。arthas 3.1.7 在github
+            1.2。readme：下载，安装，启动
+            1.3。先关注 主要的，容易面试问到 的功能！
+
+        2.小技巧：1 linux cd arthas-packaging-3.1.7-bin -> cd a*bin
+                         vi T.java -> javac *.java
+
+        3。jad java反编译 cmd line : jad com.bbb.msb.A(.java),
+               主要是动态代理的类拓展能展现出来的字节码，
+               第三方类（观察代卖），
+               版本问题（确定自己的最新的代码commitId，，没啥用）
+
+        4.redefine 热替换（字节码注入）
+            4.1 限制：只能该方法实现，不能改方法名，不能改属性。
+            4.2 eg:redefine /root/TT.class
+            4.3 TODO  原理：classLoader 重新注入
+            4.4 配合 apollo redis
+                log(线上有点bug 但是看不出问题，追加包裹二条log看出入参，但是要写脚本集群改一遍)
+
+
+        5.sc : search class
+        6.watch : watch method
+
+        7。很多程序没有oom 但是不断的fgc 本质是一样的 会卡，gc回收特别少但频繁。
+
+        8。cms+parentlNew jdk13被干掉了 cms完成了自己的历史使命
+
+        9。（smile jira）mbp-push netty的内存爆了，加内存和高性能物理机，cms+parenelltNew -》 gc换成g1了，好很多。
+
+        10。lambda 表达式导致方法区溢出（methodArea / perm metaspace）,lambda会有不断产生innerClass，
+            java.lang.OutOfMemoryError:Compressed class space
+
+             跟方法递归一样。
+            java.lang.StackOverFlowError -Xss设置栈大小吧
+
+        11。Distptor有个可以设置链长度，如果过大，对象也大，消费完不主动释放，也会oom
+
+        12。直接内存溢出《深入理解java虚拟机》p59，使用unsafe直接分配内存（c++），或者使用NIO的问题
+
+        13。小米云重写了finalize() ，重写的方法里有RPC调用逻辑，耗时毫秒级，导致频繁GC
+
+        14。如果又一个系统，堆内存一直不超过10%，但观察GC日志，发现FGC很频繁？
+             显式调用 System.gc() //这个gc会调用FGC ；或者hvm参数：-XX:+DisableExplictGC System.gc()就不管用了
+             System.gc()这个函数会建议jvm进行gc 但是jvm不会立即gc，会挑个合适时机gc。
+
+        15。native oom （thread）一般是jvm内存栈物理内存的50-80%，剩下50-20%就是本地空间了。但是可以调
+
+        15。小知识 c++ new/delete 构造函数（跟java一样）/析构函数（java的gc替代了）

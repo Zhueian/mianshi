@@ -7,4 +7,8 @@
     11。jmap -histo PID | head -20 jvm前20多的实例。
         但是jmap的命令很吃内存，大内存jvm用jmap很可能出现卡顿
 
-    12。设定启动参数HeapDump 。oom自动产生堆转储文件 / jamp也能dump ： jmap -dump:format=b,file=xxx pid/jmap -histo
+    12。设定启动参数HeapDump 。oom自动产生堆转储文件 cmdline：
+             -XX:+HeapDumpOnOutOfMemoryError 设置当首次遭遇内存溢出时导出此时堆中相关信息
+             -XX:HeapDumpPath=/tmp/heapdump.hprof 指定导出堆信息时的路径或文件名
+
+            / jamp也能dump ： jmap -dump:format=b,file=xxx pid/jmap -histo
