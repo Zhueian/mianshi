@@ -1,0 +1,30 @@
+
+
+    1.disruptor 翻译为 破坏者 基金公司造的轮子
+
+    2。JMH java Microbenchmark Harness 由JIT的开发 归于OpenJDK java测试
+
+    3。特点：环形，无锁，cas ，单机支持高并发（单线程600w订单）
+
+    4。基于事件的生产者消费者模式 观察者模式
+
+    5。Blocked 比 Concurrent 容器效率低 ， 链表比数组的便利效率低（链表要维护头尾俩指针）
+        但是jdk中没有ConcurrentArrayQueue只有ConcurrentLinkedQueue,为啥？数组大小是要提前固定！可以有CopyOnWriteQueue
+
+    6。可以认为 Disruptor可以是环形ConcurrentArrayQueue
+
+    7。一般容量（size）为2的n次幂，因为pos = num & (size - 1)
+
+    8.每个元素由都有是否消费的标记为，覆盖不覆盖由8种等待策略（生产速度大于消费速度时）
+
+    9。Disruptor写指针 sequence（一连串，顺序，次序）
+
+    10。Disruptor开发步骤 比较固定
+        10。1
+            定义Event
+        10。2
+            定义工厂，填充队列，不直接new Event，因为Disputor初始化非配内存且直接覆盖不用GC了
+        10。3
+            定义Handler
+
+    11。追求极致时速 就不要懒加载，懒汉模式等等，判断时候实例和实例化都是耗时严重的流程！
