@@ -7,7 +7,7 @@ public abstract class HookAbstractClass {
     /**
      * 模版方法，按照线性的工作流执行下去,或者各种组合
      */
-    public void tempalteMethod(){
+    public final void tempalteMethod(){
         abstractMethod1();
         hookMethod1();
         if (hookMethod2()){

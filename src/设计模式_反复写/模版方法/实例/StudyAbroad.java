@@ -5,7 +5,7 @@ package 设计模式_反复写.模版方法.实例;
  * 抽象出国留学
  */
 public abstract class StudyAbroad {
-    public void studyAbroadHandler(){
+    public final void studyAbroadHandler(){
         //入学申请
         applyEnrol();
         //办理因私出国护照，出境卡和公证

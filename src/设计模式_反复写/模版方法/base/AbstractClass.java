@@ -4,7 +4,7 @@ package 设计模式_反复写.模版方法.base;
  * Created by qiucy on 2020/11/30.
  */
 public abstract class AbstractClass {
-    public void TemplateMethod(){
+    public final void TemplateMethod(){
         SpecificMethod();
         abstractMethod1();
         abstractMethod2();
