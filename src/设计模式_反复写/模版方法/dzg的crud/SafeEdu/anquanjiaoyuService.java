@@ -8,7 +8,7 @@ import 设计模式_反复写.模版方法.dzg的crud.Redishuancun;
 /**
  * Created by qiucy on 2020/12/1.
  */
-@Redishuancun(key = {"redisCache_Key"},isCleanWhenAdd = false)
+@Redishuancun(key = {"anquanjiaoyu_redisCache_Key"},isCleanWhenAdd = false)
 public class anquanjiaoyuService extends BaseServive implements BaseCRUD {
     @Override
     public BaseCRUDBiz getBaseCRUDBiz() {
