@@ -13,7 +13,7 @@ import 设计模式_反复写.模版方法.dzg的crud.SafeEdu.anquanjiaoyuCRUDBi
 public class ziyingyongService extends BaseServive implements BaseCRUD {
     @Override
     public BaseCRUDBiz getBaseCRUDBiz() {
-        return new anquanjiaoyuCRUDBiz();
+        return new ziyinyongCRUDBiz();
     }
 
     public String add(){
