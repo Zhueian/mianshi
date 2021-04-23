@@ -5,3 +5,31 @@
     a：用主键 between（a,b）或者 in（a，b）；
 4。kafka怎么ack的 ？
 5。kafka怎么防止重复消费的 ？
+
+20210421--电话面试小公司4个人
+1。spring中的beanfactory factoryBean
+2。kafka的原理，用了什么协议
+    kafka做日志归集，风控信息归集，同一应用自产自销做线程池削峰填谷
+
+3。redis事务，集群和哨兵区别
+    事务：支持一次性按顺序执行多个命令的能力
+    话术：单线程无法发挥多核CPU性能，不过可以通过在单机开多个Redis实例来解决
+4。dobbo协议，话术：协议有很多，但是一个dubbo局域网内，协议有很多重叠功能，一般就用2，3个
+    1。dubbo:单一长链接，nio，适于小数量并发量大、不适于大io流（音频视频文件）
+    2.rmi：采用java.rmi.* 阻塞短链，jdk标准序列化，服务接口直接间接继承java.rmi.Remote
+    3.hession：
+        Hessian 底层采用 Http 通讯，采用 Servlet 暴露服务，Dubbo 缺省内嵌 Jetty 作为服务器实现。
+        Hessian 是 Caucho 开源的一个 RPC 框架，其通讯效率高于 WebService 和 Java 自带的序列化
+        适合：大io流
+        实体类实现序列化接口
+    4.webservice
+        多链接，短链接，soap文本序列化，适于：跨语言系统集成
+    5.thrift
+    6.memcached
+    7.http
+    8.redis
+    9.restfull
+
+20210423 阿里外包一面
+1.b树和b+树
+2。mysql索引失效的条件
