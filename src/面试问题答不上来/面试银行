@@ -8,6 +8,14 @@
 
 20210421--电话面试小公司4个人
 1。spring中的beanfactory factoryBean
+    beanFactory是一个工厂接口，实现类如：XmlApplicationCOntext,实现类就是那个context上下文环境，
+    factoryBean 是一个普通接口，实现类是就是生成bean的工具，spring叫factoryBean，
+        apache叫beanUtils.create(xxx.Class)；beanUtil.copy(source,target)
+        applicationContext是beanFactory的子接口，具体到项目每一个model 继承关系体现在pom文件的<dependency>标签，如common不能访问web，每个model都能访问conmon
+    ioc话术：
+        beanFatory就是简单的map<XXX.Class,Object>;beanFactory
+        applicationContext.refresh()，是大多数Java 程序员阅读spring源码的入口吧。
+
 2。kafka的原理，用了什么协议
     kafka做日志归集，风控信息归集，同一应用自产自销做线程池削峰填谷
 
