@@ -1,0 +1,8 @@
+
+        转载自知乎，所读有感
+
+1。话术：一句话概括单线程或但进程同时监测多个文件描述符是否可以执行io操作的能力
+2。linux io多路复用有select poll epoll
+3。linux下的redis/nginx：epoll > select > poll
+    epoll随着文件描述符增加 时间复杂度是O(1)，select/poll是O(n)
+    epoll的文件描述符可以多线程/进程共享。不需要多个拷贝。

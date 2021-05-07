@@ -20,3 +20,4 @@ key 的基本属性 type（type key） ：key对应的value的类型 string hset
 INCRBY key 自增
 DECRBBY key 自减
 INCRBYFLOAT key xx 自增浮点数
+

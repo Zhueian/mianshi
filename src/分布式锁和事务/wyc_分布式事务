@@ -33,3 +33,6 @@
 
 4：seata框架，有点想apollo 这种框架要引入xxx-server和对应的数据库表。
     1。@GobaleTranctional（rockbackFor = Exception.class）业务0侵入 部署个seata-server+db
+
+b站cap 简单明了说明：C（consistency）一致性、P(partition tolerance) 分区容错性、A(availability) 可用性
+                  cp或者ap 分布式一定要有p，没p单机的话也就没有这么多事了。
