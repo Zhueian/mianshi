@@ -1,0 +1,25 @@
+
+    1.undo.log 记录update +1 insert语句，回滚补偿做相应的uodate -1 ； delete
+    2。redo.log 文件记录写未提交文件，写在mysql一个内存buffer。
+        buffer是全量磁盘随机io，innodb_flush_log_at_trx_commit=0 mysql buffer周期秒做持久化，宕机会丢失周期秒的缓存大小数据
+                            innodb_flush_log_at_trx_commit=1 每次commit同步调用fsync()系统调用，性能差；强一致性
+                            innodb_flush_log_at_trx_commit=2 直接写入os buffer，每秒刷一次fsync()
+        redo.log是追加顺序io（kafka一样），所以效率高些；
+    3.mysql的还有bin.log（表的元数据） ; 慢查询.log ; 查询.log
+    4。数据库隔离性2种实现 读读用锁 行锁，然后写操作索引失效升级表锁，索引字段有范围会段锁 show_lock；
+        读写用的是mvcc 是快照版本读（无锁，以空间换时间）（当前读是锁机制）
+            版本快照链是追加两个隐藏列
+                1。版本id ；
+                2。回滚指针指向当前行数据硬盘地址
+            readView四个字段
+                1。m_ids:列表，存活跃事务id
+                2。min_trx_id:m_ids的最小值（最原始版本id）
+                3。max_trx_id:m_ids的最大值+1 下一个事务id
+                4。creator_trx_id 这个readView对象id
+        https://zhuanlan.zhihu.com/p/117476959
+        1。读未提交 脏读
+        2，读已提交（mvcc的readView是以select为单位生成，即一个事务多个相同查询就会生成多个readView）
+        3，可重复读（mvcc的readView是以事务为单位生成，即一个事务多个相同查询就会生成1个readView）
+            mysql默认级别
+            mysql默认是开段锁。
+        4。串行化
