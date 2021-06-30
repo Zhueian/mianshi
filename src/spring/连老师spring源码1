@@ -1,0 +1,38 @@
+
+        1。debug流程：
+            1.1 : ClassPathXmlApplicationContext classPathXmlApplicationContext = new ClassPathXmlApplicationContext("app.xml");
+            1.2 : step into
+                  // 急切地加载 ContextClosedEvent 类以避免奇怪的类加载器问题
+                  // 在 WebLogic 8.1 中关闭应用程序。 （达斯汀·伍兹报道。）
+                  // Eagerly load the ContextClosedEvent class to avoid weird classloader issues
+                  // on application shutdown in WebLogic 8.1. (Reported by Dustin Woods.)
+            1.3 : AbstractApplicationContext->ContextClosedEvent.class.getName();
+            1.4 : ClassPathXmlApplicationContext->this(new String[] {configLocation}, true, null );->refresh();
+                  // 同步模块里的准备刷新
+            1.5 : AbstractApplicationContext->prepareRefresh()
+                  // Initialize any placeholder property sources in the context environment
+                  // 初始化上下文环境的所有占位符属性资源。
+            1.6 : AbstractApplicationContext->initPropertySources()
+                  // 这个比较深比较复杂
+                  // Tell the subclass to refresh the internal bean factory.
+                  // 告知子类去刷新内部bean工厂
+            1.7 : AbstractApplicationContext->ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
+                  //
+            1.8 : AbstractRefreshableApplicationContext.refreshBeanFactory()
+
+         2。spring源码方法论：
+            1.0 :
+
+         3.老连的spring-debug：
+            1.0 :
+
+         4.第四节课：spring启动流程细节
+            4.1 : AbstractApplicationContext.this.refresh.prepareRefresh:
+                1.前戏，容器刷新前的准备工作
+                2。设置容器的启动时间
+                3。设置活跃状态为active
+                4。设置关闭状态为false
+                5。获取Environment对象，并加载当前系统的属性值到Environment中
+                6。初始化监听器和时间的集合对象，集合默认为空
+            4.2 : AbstractApplicationContext.this.obtainFreshBeanFactory();
+                1.refreshBeanFactory.销毁已存在的beanFactory。保证运行时容器，refresh是最新beanFactory
