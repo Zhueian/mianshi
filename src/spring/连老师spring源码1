@@ -36,3 +36,12 @@
                 6。初始化监听器和时间的集合对象，集合默认为空
             4.2 : AbstractApplicationContext.this.obtainFreshBeanFactory();
                 1.refreshBeanFactory.销毁已存在的beanFactory。保证运行时容器，refresh是最新beanFactory
+                2，老连说是-适配器设计模式：
+                    AbstractXmlApplicationContext.loadBeanDefinitions(DefaultListableBeanFactory)
+                        XmlBeanDefinitionReader beanDefinitionReader = new XmlBeanDefinitionReader(beanFactory);
+                3.配置文件现在多用.xsd ,以前有dtd（document to defin ition）和sax（simple api 4 xml），
+                    本地路径在spring-context.META-INF.spring.schemas -> org/springframework/context/config/spring-context.xsd
+                4.适配器设计模式：AbstractXmlApplicationContext.initBeanDefinitionReader
+                5.xml->doc对象：String[] config -> Resource[] -> inputstream -> docment -> BeanDefinition
+                6.小技巧，类继承图可以add class，看多个类继承关系
+                7。beandefinition放到beanfactory
