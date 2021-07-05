@@ -11,5 +11,6 @@ public class Main {
         System.out.println("start >> ");
         BeanFactory a = new ClassPathXmlApplicationContext("app.xml");
 //        BeanFactory myClassPathXmlAppContext = new MyClassPathXmlAppContext("app.xml");
+
     }
 }

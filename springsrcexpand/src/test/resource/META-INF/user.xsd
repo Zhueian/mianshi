@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.baidu.com/schema/user"
+            xmlns:xsd="http://www.baidu.com/schema/user"
+            elementFormDefault="qualified">
+
+    <element name="msb">
+        <complexType>
+            <attribute name="id" type="string"/>
+            <attribute name="name" type="string"/>
+        </complexType>>
+    </element>>
+</xsd:schema>
