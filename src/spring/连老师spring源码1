@@ -44,4 +44,12 @@
                 4.适配器设计模式：AbstractXmlApplicationContext.initBeanDefinitionReader
                 5.xml->doc对象：String[] config -> Resource[] -> inputstream -> docment -> BeanDefinition
                 6.小技巧，类继承图可以add class，看多个类继承关系
-                7。beandefinition放到beanfactory
+                7。beandefinition放到beanfactory工厂准备工作
+            4.3 : spring第七节课 spring的bean
+                1。refresh（）第三个方法：prepareBeanFactory(beanFactory)，beanFactory.addPropertyEditorRegistrar(new ResourceEditorRegistrar(this, getEnvironment()));
+                    增加一个属性编辑注册器，怎么理解呢：比如要自定义弄个时间解析：yyyy-MM-dd 或者地址解析器:xxprivider-xxcity-xxarea,这种让spring理解，扩展。
+                    在'填充属性'阶段
+                2.spring骚写法for循环
+                    PropertyEditorRegisterSupport.getCustomEditor():
+                    for(Itertor<Class<?>> it = this.customEditors.keySet().iterator ; it.hasNext() && editor != null ;)
+                3.TODO 打开BeanFactory ignoreDependencyInterface方法的正确姿势:https://www.jianshu.com/p/3c7e0608ff1f
