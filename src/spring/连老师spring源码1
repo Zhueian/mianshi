@@ -53,3 +53,15 @@
                     PropertyEditorRegisterSupport.getCustomEditor():
                     for(Itertor<Class<?>> it = this.customEditors.keySet().iterator ; it.hasNext() && editor != null ;)
                 3.TODO 打开BeanFactory ignoreDependencyInterface方法的正确姿势:https://www.jianshu.com/p/3c7e0608ff1f
+
+         5. 第八节课：spring的beanFactoryPostProcess的执行1、refresh()第4个方法：
+                1。@Autowired byName或者byType,方法名：autowiredBeanByName,
+                2.AbstractApplicationContext.LOAD_TIME_WEAVER_BEAN_NAME:spring的aop织入，增加对AspectJ的支持。
+                    java有三种织入方式：aspectJ用了1、2两种
+                    1。编译器织入：用特殊的java编译器织入。
+                    2。类加载器织入：cglib和jdk动态代理就是，类字节码加载时织入
+                    3。运行时织入：TODO desc
+                3。postPorcessBeanFactory做扩展：继承MyClassPathXmlApplicationContext,主动重写postProcessBeanFactory方法。
+                4。refresh()第5个方法，invokeBeanFactoryPostProcessors。调用各种beanFactory处理器,比较繁琐。
+                    1。xml的<bean dataSource> ${userName}就是这里替换的。
+                    2。BeanDefinitionRegistry接口提供的是BeanDefinition的增删改查api
