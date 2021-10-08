@@ -1,0 +1,31 @@
+战绩存储
+    1.垂直分表：
+        基本信息，用mysql 水平分表：
+            可以用 时间序列数据库 fluxdb
+            一个月400w数据，保存一定时间，过期清除。
+            tableName_yyyyMMdd的表名格式。eg t_order_detail_20210101 、t_order_detail_20210201。
+            问题一：跨表分页，pageIndex不知道在那个表。
+                  todo 是由分表中间件包了吗？
+                  法子一 ： 给每一张表加一个int类型的雪花id，
+                          在查询时候先跨表查出所有id，
+                          再根据ids 分页，分批请求
+                          最后根据id跨表索引数据。
+                          伪代码：
+                            ids int[] = {1 ... 99};
+                            pages int[][] = {{1 ... 10},
+                                             {11 ... 20},
+                                             ...};
+                            idxs = pages[i];
+                            for.idx;
+                          todo 但是这个法子用不了在翼支付不删账单记录的，海江是最多跨两张表，翼支付跨多少张表是未知。
+                  法子二 ： 把未来一周的表先创建，把当周数据冗余存一份在未来一周的表，则可以不用跨表。
+                          todo 这个问题也是用不了翼支付不删账单数据，跨几张表是未知的问题。海江只存两周数据
+                          todo 可以看看海江的 dao.xml 怎么写的
+                            <insert id="insert">
+                                <!-- 创建本周表和下周表 -->
+                               create table if not exists t_${thisWeekTableNamePrefix}_round_log like mj_log_template.t_tempalte_round_log;
+                               create table if not exists t_${nextWeekTableNamePrefix}_round_log like mj_log_template.t_tempalte_round_log;
+                               insert into t_${thisWeekTableNamePrefix}_round_log (...) values (...)
+                               insert into t_${nextWeekTableNamePrefix}_round_log..
+                            </insert>
+        对局详情，长json数据用aliOSS+CDN 或者 备选建议用manogo。

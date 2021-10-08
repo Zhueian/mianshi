@@ -2,6 +2,13 @@
     mysql调优：
 
     1。性能监控
+        mysql自带的监控工具：show profile
+        mysqlServer:
+            连接器（账密权限管理）
+            分析器（ast抽象语法树）
+            优化器（RBO规则优化 CBO成本优化）
+            执行器
+
     2。schema与数据类型优化
     3。执行计划
     4。通过索引进行优化

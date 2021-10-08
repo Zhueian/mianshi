@@ -1,0 +1,51 @@
+
+    1.acid 原子性：全部成功失败、undo.log机制
+            一致性、
+            隔离性、锁、mvcc（多版本并发控制）ru读未提交 rc读已提交 rp可重复读（默认） ser序列化
+                rc、rp区别是生成readview是时间有差异，所以读取数据版本有差异：
+                    共同数据源里 rp在当前事务begin生成的readview，别的事务怎么写且提交，当前事务都读不到。解决脏读、不可重复读，有幻读
+                    共同数据源里 rc在执行当前sql语句生成最新的readview，别的事务怎么写且提交，当前事务都可读。解决脏读
+                幻读是事务A读取一段范围数据，事务B插入该范围内已提交，A事务会产生幻读，要用'间隙锁'for update、或者隔离界别是串行。
+                    幻读是不可重复读的一种特类，写语句本来就是当前读 且 普通查询是快照读
+            永久性：redo.log机制
+    2.快照多个版本记录存在 undo.log文件中
+    3。查看生产数据库锁信息：开启锁信息（死锁、锁冲突）打印参数：
+                                        -> 开始锁信息打印参数 output_lock=ON
+                                        -> show '%innodb%' status/G
+                                        -> 看lock mode（锁类型）
+
+    4。博客insidemysql
+    5。todo chunk
+    6.  组合索引最左原则像是 地区三级联动。找柳村要全表查，但是中国-河北省-保定市-定州县-柳村就好查了。
+        组合索引左边列出现范围查询（ <> like 。但是没有 >= 、 <=），后续索引会失效。
+            eg:select * from t where id(主键索引 生效了) > 10 and  name（普通索引 失效了） = 'lisi'
+                组合索引是 idx_id_name key_len=4(int 长度为4)
+               select * from t where id(主键索引 生效了) = 10 and  name（普通索引 生效了） = 'lisi'
+                组合索引是 idx_id_name key_len=4(int 长度为4+33=37)
+            varchat(10) (utf-8) 3*10+1(为null)+2（可变字符串长度）
+            int(11) 4+1(为null)
+         is null 、 is not null索引会失效
+         or有时会导致失效：
+            eg:select name = 'zs' or age = 10 失效了。
+            eg:select id = 1 or id = 9 生效了。
+         优化器判断全表扫描比索引快，就走全表。
+            carddinality基数，dml会重建索引，这个数字可能更新不及时，查语句可能索引就失效，一个事务里有dml也有查询语句（重建索引时间远高于全表的时间），
+            可以optimize table tablename
+            也可以force index
+         or in比较复杂，可能会被优化器搞掉索引，导致索引失效。
+
+    7。mysql做分库分表
+        mycat shardingsphere这些中间件做水平分裤，水平分表 垂直分库 垂直分表。
+        水平一般按体量范围拆
+        垂直一般按业务拆，分冷热字段。
+        实操 todo
+    8。innodb不仅有聚簇索引，还有非聚簇索引，一个表有多个索引就有多棵b+树，只有一颗有聚簇索引，其他是用回表查的
+    9。主从复制。基于binlog
+        单机很多锁和mvcc都是读写问题的，只要读写分离了，问题就少了。
+        原理 master dml会追加到binlog（增量不是全量，顺序io 快些），slave会pull masterBinLog放到relaylog,比较差异（这个是随机io 慢些）并还原到master一样。
+        随机io：地址不连续要全量扫，慢些，
+        顺序io：append，增量，快些
+        主从同步延时问题解决：
+            主从集群，读写分离一主多从。
+    10。mysql一条数据是如何持久化到数据库。
+    11。todo 第六节课前半段有自定义变量的 update t1 set date=now() where id=1 and @now:=now()
